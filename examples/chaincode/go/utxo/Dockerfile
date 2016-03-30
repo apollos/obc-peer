@@ -1,6 +1,8 @@
-from golang:1.6
+from apollos/ubuntu-14.04.2-ppc64le-obc:latest
 
 RUN apt-get update && apt-get install pkg-config autoconf libtool -y
+RUN apt-get install libboost1.55-dev -y
+RUN apt-get install libboost1.55-all-dev -y
 RUN cd /tmp && git clone https://github.com/bitcoin/secp256k1.git && cd secp256k1/
 WORKDIR /tmp/secp256k1
 RUN ./autogen.sh
@@ -10,7 +12,7 @@ RUN ./tests
 RUN make install
 
 WORKDIR /tmp
-RUN apt-get install libtool libboost-all-dev -y
+RUN apt-get install libtool -y #libboost-all-dev -y
 RUN git clone https://github.com/libbitcoin/libbitcoin-consensus.git
 WORKDIR /tmp/libbitcoin-consensus
 RUN ./autogen.sh
@@ -30,6 +32,6 @@ RUN make
 RUN make install
 
 # Now add this for SWIG execution requirement to get missing stubs-32.h header file
-RUN apt-get install g++-multilib -y
+#RUN apt-get install g++-multilib -y
 
 ENV CGO_LDFLAGS="-L/usr/local/lib/ -lbitcoin-consensus -lstdc++"

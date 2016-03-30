@@ -166,7 +166,7 @@ func (vm *VM) BuildPeerContainer() error {
 	outputbuf := bytes.NewBuffer(nil)
 	opts := docker.BuildImageOptions{
 		Name:         "openchain-peer",
-		Pull:         true,
+		Pull:         false, //true,
 		InputStream:  inputbuf,
 		OutputStream: outputbuf,
 	}
